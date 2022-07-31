@@ -1,0 +1,13 @@
+.product-item {
+  font-size: 18px;
+}
+
+.product-item h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  font-weight: 300;
+}
+
+.product-item h4 {
+  margin: 0;
+}

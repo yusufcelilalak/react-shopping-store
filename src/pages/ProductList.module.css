@@ -1,0 +1,29 @@
+.product-list {
+  width: 80%;
+  margin: auto;
+}
+
+.category-name {
+  margin: 4rem 0;
+}
+
+.category-name h1 {
+  font-weight: 400;
+}
+
+.product-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 45px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.temp-footer {
+  height: 100px;
+}
