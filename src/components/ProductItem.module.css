@@ -1,0 +1,30 @@
+.product-item {
+  font-size: 18px;
+}
+
+.product-image {
+  position: relative;
+}
+
+.product-item h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  font-weight: 300;
+}
+
+.product-item h4 {
+  margin: 0;
+}
+
+.add-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 3.25rem;
+  height: 3.25rem;
+  bottom: -1.12rem;
+  right: 1rem;
+  background-color: #5ece7b;
+  border-radius: 50%;
+}

@@ -1,0 +1,25 @@
+.product-page {
+  display: grid;
+  grid-template-columns: 1fr 4fr 4fr;
+  justify-content: center;
+
+  width: 88%;
+  margin: 10rem auto;
+}
+
+.product-photos img {
+  width: 5rem;
+  height: 5rem;
+}
+
+.main-product-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-product-photo img {
+  min-width: 30rem;
+  min-height: 30rem;
+  object-fit: contain;
+}

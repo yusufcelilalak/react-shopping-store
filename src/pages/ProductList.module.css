@@ -1,5 +1,5 @@
 .product-list {
-  width: 80%;
+  width: 88%;
   margin: auto;
 }
 
@@ -17,7 +17,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 45px;
+  gap: 3.375rem;
   width: 100%;
   margin: 0;
   padding: 0;

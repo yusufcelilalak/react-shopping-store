@@ -1,7 +1,7 @@
 import { Component } from "react";
 import classes from "./ProductList.module.css";
 import exampleProduct from "../assets/example-product.png";
-import ProductItem from "../components/Layout/ProductItem";
+import ProductItem from "../components/ProductItem";
 
 const EXAMPLE_PRODUCTS = [
   { id: 1, image: exampleProduct, title: "Apollo Running Short", price: 50 },
