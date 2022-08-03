@@ -1,0 +1,14 @@
+.color-button {
+  display: none;
+}
+
+.color-label {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+
+.color-button:checked + .color-label {
+  outline: 1px solid #5ece7b;
+}

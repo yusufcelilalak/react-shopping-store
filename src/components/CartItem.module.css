@@ -1,0 +1,36 @@
+.cart-item {
+  display: grid;
+  grid-template-columns: 14fr 1fr 2fr;
+  border: 1px #e5e5e5;
+  border-style: solid none;
+  padding: 1.2rem 0;
+}
+
+.item-info h2,
+h3 {
+  font-size: 1.6rem;
+  margin: 0.5rem 0;
+}
+
+.item-info h3 {
+  font-weight: 300;
+}
+
+.adding-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-photo img {
+  width: 12.5rem;
+  height: 18rem;
+  object-fit: cover;
+}

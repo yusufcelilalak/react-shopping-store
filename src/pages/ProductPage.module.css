@@ -1,10 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&family=Roboto+Condensed&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 .product-page {
   display: grid;
-  grid-template-columns: 1fr 4fr 4fr;
+  grid-template-columns: 1fr 7fr 6fr;
   justify-content: center;
-
   width: 88%;
-  margin: 10rem auto;
+  margin: 4.5rem auto;
+  font-size: 18px;
+}
+
+.product-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .product-photos img {
@@ -14,12 +23,62 @@
 
 .main-product-photo {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .main-product-photo img {
-  min-width: 30rem;
-  min-height: 30rem;
+  min-width: 33rem;
+  min-height: 33rem;
   object-fit: contain;
+}
+
+.product-information {
+  width: 50%;
+  margin-left: 4rem;
+}
+
+.product-information h1,
+h2 {
+  font-size: 1.5rem;
+}
+
+.product-information h1 {
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.product-information h2 {
+  margin: 0 0 2.5rem 0;
+  font-weight: 400;
+}
+
+.price-label {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: bolder;
+  margin-top: 0.5rem;
+}
+
+.add-cart-btn {
+  width: 18.25rem;
+  height: 3.25rem;
+  background: #5ece7b;
+  color: #fff;
+  font-weight: 300;
+  margin: 1.5rem 0 2.25rem 0;
+}
+
+.description {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-size: 1rem;
+  line-height: 159.96%;
 }

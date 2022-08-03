@@ -1,0 +1,20 @@
+.attribute-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #1d1f22;
+  width: 63px;
+  height: 45px;
+  position: relative;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.attribute-button {
+  display: none;
+}
+
+.attribute-button:checked + .attribute-label {
+  background-color: #1d1f22;
+  color: #fff;
+}
