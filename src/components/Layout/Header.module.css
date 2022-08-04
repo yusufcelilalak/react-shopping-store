@@ -1,3 +1,9 @@
+header {
+  width: 100%;
+  z-index: 100;
+  background: #fff;
+}
+
 .navbar {
   display: grid;
   align-items: center;
@@ -21,7 +27,7 @@
 .nav-links a {
   text-decoration: none !important;
   color: black;
-  padding: 0 0.7rem 1.3rem 0.7rem;
+  padding: 0 0.7rem 1.8rem 0.7rem;
   font-weight: 400;
 }
 
@@ -53,12 +59,11 @@
   gap: 0.4rem;
 }
 
-.cart {
+.cart-btn {
   position: relative;
-  height: 20px;
 }
 
-.cart img {
+.cart-btn img {
   padding: 0;
 }
 
@@ -75,6 +80,22 @@
   background-color: black;
   color: white;
   border-radius: 50%;
+}
+
+.cart-dropdown {
+  position: relative;
+  height: 20px;
+}
+
+.cart-dropdown-menu {
+  position: absolute;
+  top: 3.1rem;
+  right: 0;
+  width: 20rem;
+  height: 41rem;
+  background-color: #ffffff;
+  z-index: 100;
+  overflow: scroll;
 }
 
 button {

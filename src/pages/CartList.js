@@ -35,19 +35,34 @@ const EXAMPLE_PRODUCTS = [
     your favorite brands.`,
     quantity: 2,
   },
+  {
+    id: 3,
+    images: productImage,
+    brand: "Jupiter",
+    title: "Wayferer",
+    price: 75.0,
+    attributes: {
+      SIZE: ["S", "M"],
+      COLOR: ["#1D1F22", "#15A4C3", "#EA8120"],
+    },
+    description: `Find stunning women's cocktail dresses and party dresses. Stand out
+    in lace and metallic cocktail dresses and party dresses from all
+    your favorite brands.`,
+    quantity: 3,
+  },
 ];
 
 class CartList extends Component {
   render() {
-    const totalPrice = EXAMPLE_PRODUCTS.reduce((prev, curr) => {
-      return (prev.price * prev.quantity + curr.price * curr.quantity).toFixed(
-        2
-      );
-    });
+    const totalPrice = EXAMPLE_PRODUCTS.map(
+      (product) => product.price * product.quantity
+    )
+      .reduce((a, b) => a + b)
+      .toFixed(2);
 
-    const totalQuantity = EXAMPLE_PRODUCTS.reduce((prev, curr) => {
-      return prev.quantity + curr.quantity;
-    });
+    const totalQuantity = EXAMPLE_PRODUCTS.map(
+      (product) => product.quantity
+    ).reduce((a, b) => a + b);
 
     return (
       <div className={classes["cart-list"]}>

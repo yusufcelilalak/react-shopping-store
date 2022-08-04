@@ -6,7 +6,7 @@ import classes from "./CartItem.module.css";
 class CartItem extends Component {
   render() {
     return (
-      <div className={classes["cart-item"]}>
+      <div className={`${classes["cart-item"]} ${classes[this.props.type]}`}>
         <div className={classes["item-info"]}>
           <h2>{this.props.product.brand}</h2>
           <h3>{this.props.product.title}</h3>
@@ -19,6 +19,7 @@ class CartItem extends Component {
             return (
               <Attributes
                 id={this.props.product.id}
+                type={this.props.type}
                 attribute-name={key}
                 attributes={this.props.product.attributes[key]}
               ></Attributes>
@@ -29,6 +30,7 @@ class CartItem extends Component {
         <div className={classes["adding-actions"]}>
           <AttributeButton
             id={this.props.product.id}
+            type={this.props.type}
             attribute="+"
             attribute-name="adding-action"
           />
@@ -37,6 +39,7 @@ class CartItem extends Component {
 
           <AttributeButton
             id={this.props.product.id}
+            type={this.props.type}
             attribute="-"
             attribute-name="adding-action"
           />

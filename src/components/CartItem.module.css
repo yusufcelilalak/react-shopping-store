@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+
 .cart-item {
   display: grid;
   grid-template-columns: 14fr 1fr 2fr;
@@ -7,6 +9,16 @@
   border-style: solid none;
   padding: 1.2rem 0;
   column-gap: 0.5rem;
+}
+
+.dropdown {
+  grid-template-columns: 6fr 1fr 6fr;
+  padding: 0.1rem 0;
+  column-gap: 0.5rem;
+  width: 90%;
+  border: none;
+  margin: auto;
+  font-size: 1rem !important;
 }
 
 .item-info h2,
@@ -19,9 +31,20 @@ h3 {
   font-weight: 400;
 }
 
+.dropdown h2,
+h3 {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
 .price {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+}
+
+.dropdown > .item-info > .price {
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
 }
 
 .adding-actions {
@@ -32,6 +55,15 @@ h3 {
   height: 18rem;
 }
 
+.dropdown > .adding-actions {
+  height: 12rem;
+}
+
+.dropdown > .adding-actions > .quantity {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
 .quantity {
   font-size: 1.2rem;
 }
@@ -40,11 +72,28 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 12.5rem;
   height: 18rem;
 }
 
 .product-photo img {
-  width: 12.5rem;
+  width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.dropdown .product-photo {
+  width: 7.5rem;
+  height: 11.8rem;
+}
+
+@media (max-width: 350px) {
+  .cart-item {
+    grid-template-columns: 2fr 1fr 2fr;
+  }
+
+  .product-photo {
+    width: 7.5rem;
+    height: 11.8rem;
+  }
 }

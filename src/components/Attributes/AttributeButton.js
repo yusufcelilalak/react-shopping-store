@@ -4,18 +4,20 @@ import classes from "./AttributeButton.module.css";
 class AttributeButton extends Component {
   render() {
     const style = {
-      fontSize: "3rem",
       fontFamily: `'Raleway', sans-serif`,
       fontWeight: 100,
-      width: "2.2rem",
+      width: "2.4rem",
       height: "2.2rem",
+      fontSize: "2rem",
     };
 
     const inputLabel = (_style) => {
       return (
         <label
           style={_style}
-          className={classes["attribute-label"]}
+          className={`${classes["attribute-label"]} ${
+            classes[this.props.type]
+          }`}
           htmlFor={this.props.attribute + this.props.id}
         >
           {this.props.attribute}

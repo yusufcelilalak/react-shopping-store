@@ -5,11 +5,17 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #1d1f22;
-  width: 4.1vw;
-  height: 6.2vh;
+  width: 3.9rem;
+  height: 2.8rem;
   position: relative;
   border: 1px solid black;
   cursor: pointer;
+}
+
+.dropdown {
+  width: 1rem !important;
+  height: 1rem !important;
+  font-size: 0.6rem;
 }
 
 .attribute-button {
@@ -19,4 +25,11 @@
 .attribute-button:checked + .attribute-label {
   background-color: #1d1f22;
   color: #fff;
+}
+
+@media (max-width: 326px) {
+  .attribute-label {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+  }
 }

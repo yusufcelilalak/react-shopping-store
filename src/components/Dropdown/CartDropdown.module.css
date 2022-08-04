@@ -1,0 +1,53 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  background: rgba(57, 55, 72, 0.22);
+}
+
+.cart-summary-title {
+  font-size: 1rem;
+  margin: 0.8rem 0 0.5rem 1rem;
+  font-weight: 600;
+}
+
+.cart-summary-title > span {
+  font-weight: 400;
+}
+
+.total-price {
+  width: 87%;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+
+.control-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 87%;
+  margin: 2rem auto;
+}
+
+.control-buttons button {
+  font-size: 1rem;
+  font-weight: 400;
+  width: 8.2rem;
+  height: 2.7rem;
+}
+
+.view-bag-btn {
+  background-color: #fff;
+  border: 1px solid #1d1f22;
+}
+
+.check-out-btn {
+  background: #5ece7b;
+  color: #fff;
+}

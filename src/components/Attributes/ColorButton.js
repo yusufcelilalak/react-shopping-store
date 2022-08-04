@@ -13,7 +13,7 @@ class ColorButton extends Component {
         />
         <label
           style={{ backgroundColor: this.props.color }}
-          className={classes["color-label"]}
+          className={`${classes["color-label"]} ${classes[this.props.type]}`}
           htmlFor={this.props.color + this.props.id}
         ></label>
       </Fragment>
