@@ -1,9 +1,12 @@
 .cart-item {
   display: grid;
   grid-template-columns: 14fr 1fr 2fr;
+  justify-content: center;
+  align-items: center;
   border: 1px #e5e5e5;
   border-style: solid none;
   padding: 1.2rem 0;
+  column-gap: 0.5rem;
 }
 
 .item-info h2,
@@ -13,7 +16,12 @@ h3 {
 }
 
 .item-info h3 {
-  font-weight: 300;
+  font-weight: 400;
+}
+
+.price {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .adding-actions {
@@ -21,16 +29,22 @@ h3 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  height: 18rem;
+}
+
+.quantity {
+  font-size: 1.2rem;
 }
 
 .product-photo {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 18rem;
 }
 
 .product-photo img {
   width: 12.5rem;
-  height: 18rem;
+  height: 100%;
   object-fit: cover;
 }

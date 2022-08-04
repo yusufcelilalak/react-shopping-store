@@ -15,6 +15,7 @@ class Attributes extends Component {
             ? this.props.attributes.map((attribute) => {
                 return (
                   <AttributeButton
+                    id={this.props.id}
                     attribute-name={this.props["attribute-name"]}
                     attribute={attribute}
                   >
@@ -25,6 +26,7 @@ class Attributes extends Component {
             : this.props.attributes.map((attribute) => {
                 return (
                   <ColorButton
+                    id={this.props.id}
                     attribute-name={this.props["attribute-name"]}
                     color={attribute}
                   />

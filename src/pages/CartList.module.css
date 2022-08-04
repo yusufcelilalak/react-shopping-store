@@ -7,3 +7,34 @@ h1 {
   margin: 3.5rem 0;
   font-size: 1.7rem;
 }
+
+.bold-quantity {
+  margin-left: 2rem;
+  text-align: end;
+}
+
+.payment-information {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  width: 17rem;
+  margin: 2rem 0 1rem 0;
+  row-gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.bold-info {
+  font-weight: 700;
+}
+
+.order-btn {
+  width: 17rem;
+  height: 3rem;
+  background-color: #5ece7b;
+  color: #fff;
+  font-weight: 600;
+}
+
+footer {
+  height: 5rem;
+}

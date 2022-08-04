@@ -8,13 +8,13 @@ class ColorButton extends Component {
         <input
           className={classes["color-button"]}
           type="radio"
-          id={this.props.color}
-          name={this.props["attribute-name"]}
+          id={this.props.color + this.props.id}
+          name={this.props["attribute-name"] + this.props.id}
         />
         <label
           style={{ backgroundColor: this.props.color }}
           className={classes["color-label"]}
-          htmlFor={this.props.color}
+          htmlFor={this.props.color + this.props.id}
         ></label>
       </Fragment>
     );

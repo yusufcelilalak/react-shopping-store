@@ -1,10 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap");
+
 .attribute-label {
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid #1d1f22;
-  width: 63px;
-  height: 45px;
+  width: 4.1vw;
+  height: 6.2vh;
   position: relative;
   border: 1px solid black;
   cursor: pointer;
