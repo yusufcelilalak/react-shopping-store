@@ -69,6 +69,7 @@ h3 {
 }
 
 .product-photo {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,9 +83,37 @@ h3 {
   object-fit: cover;
 }
 
+.product-photo button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.73);
+  color: #fff;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.previous-photo-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 3rem;
+}
+
+.next-photo-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
 .dropdown .product-photo {
   width: 7.5rem;
   height: 11.8rem;
+}
+
+.dropdown .product-photo button {
+  display: none;
 }
 
 @media (max-width: 350px) {

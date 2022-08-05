@@ -46,7 +46,9 @@ class CartItem extends Component {
         </div>
 
         <div className={classes["product-photo"]}>
-          {<img src={this.props.product.images} alt="clothes" />}
+          <img src={this.props.product.images} alt="clothes" />
+          <button className={classes["previous-photo-btn"]}>&lt;</button>
+          <button className={classes["next-photo-btn"]}>&gt;</button>
         </div>
       </div>
     );

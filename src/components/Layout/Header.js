@@ -5,17 +5,19 @@ import logoURL from "../../assets/a-logo.svg";
 import downArrow from "../../assets/down-arrow.svg";
 import emptyCart from "../../assets/empty-cart.svg";
 import CartDropdown from "../Dropdown/CartDropdown";
+import CurrencyDropdown from "../Dropdown/CurrencyDropdown";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cartButtonClicked: null,
+      currencyButtonClicked: null,
     };
   }
 
   mouseLeaveHandler = () => {
-    this.setState({ cartButtonClicked: null });
+    this.setState({ cartButtonClicked: null, currencyButtonClicked: null });
   };
 
   render() {
@@ -61,13 +63,30 @@ class Header extends Component {
             <img src={logoURL} alt="brand-logo" />
           </div>
           <div className={classes.actions}>
-            <button className={classes.currency}>
-              <span>$</span>
-              <img src={downArrow} alt="down-arrow" />
-            </button>
+            <div className={classes["currency-dropdown"]}>
+              <button
+                onClick={() =>
+                  this.setState({
+                    currencyButtonClicked: 1,
+                    cartButtonClicked: null,
+                  })
+                }
+                className={classes.currency}
+              >
+                <span>$</span>
+                <img src={downArrow} alt="down-arrow" />
+              </button>
+              {this.state.currencyButtonClicked && <CurrencyDropdown />}
+            </div>
+
             <div className={classes["cart-dropdown"]}>
               <button
-                onClick={() => this.setState({ cartButtonClicked: 1 })}
+                onClick={() =>
+                  this.setState({
+                    cartButtonClicked: 1,
+                    currencyButtonClicked: null,
+                  })
+                }
                 className={classes["cart-btn"]}
               >
                 <img src={emptyCart} alt="empty-cart" />
