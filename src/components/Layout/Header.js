@@ -6,6 +6,7 @@ import downArrow from "../../assets/down-arrow.svg";
 import emptyCart from "../../assets/empty-cart.svg";
 import CartDropdown from "../Dropdown/CartDropdown";
 import CurrencyDropdown from "../Dropdown/CurrencyDropdown";
+import { connect } from "react-redux";
 
 class Header extends Component {
   constructor(props) {
@@ -21,42 +22,26 @@ class Header extends Component {
   };
 
   render() {
+    //console.log(this.props.categories);
     return (
       <header>
         <div onMouseLeave={this.mouseLeaveHandler} className={classes.navbar}>
           <nav className={classes["nav-links"]}>
             <ul>
-              <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  to="/"
-                >
-                  WOMEN
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  to="/product-page"
-                >
-                  MEN
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? classes.active : undefined
-                  }
-                  activeClassName={classes.active}
-                  to="/cart-list"
-                >
-                  KIDS
-                </NavLink>
-              </li>
+              {this.props.categories.map((category) => {
+                return (
+                  <li key={category.name}>
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? classes.active : undefined
+                      }
+                      to={`/${category.name === "all" ? "" : category.name}`}
+                    >
+                      {category.name.toUpperCase()}
+                    </NavLink>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
           <div className={classes.logo}>
@@ -73,10 +58,12 @@ class Header extends Component {
                 }
                 className={classes.currency}
               >
-                <span>$</span>
+                <span>{this.props.currency[0]}</span>
                 <img src={downArrow} alt="down-arrow" />
               </button>
-              {this.state.currencyButtonClicked && <CurrencyDropdown />}
+              {this.state.currencyButtonClicked && (
+                <CurrencyDropdown onMouseLeave={this.mouseLeaveHandler} />
+              )}
             </div>
 
             <div className={classes["cart-dropdown"]}>
@@ -107,4 +94,9 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  categories: state.products.categories,
+  currency: state.currency.choosenCurrency,
+});
+
+export default connect(mapStateToProps, null)(Header);

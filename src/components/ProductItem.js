@@ -27,8 +27,12 @@ class ProductItem extends Component {
           onMouseOut={this.productMouseOutHandler}
           className={classes["product-item"]}
         >
-          <div className={classes["product-image"]}>
-            <img src={this.props.image} alt={this.props.title} />
+          <div className={classes["product-image-field"]}>
+            <img
+              className={classes["product-image"]}
+              src={this.props.image}
+              alt={this.props.title}
+            />
             {this.state.isOver && (
               <button className={classes["add-cart-btn"]}>
                 <img src={addCart} alt="empty-cart" />
@@ -36,7 +40,7 @@ class ProductItem extends Component {
             )}
           </div>
           <h3>{this.props.title}</h3>
-          <h4>${this.props.price}</h4>
+          <h4>{this.props.price}</h4>
         </Card>
       </li>
     );

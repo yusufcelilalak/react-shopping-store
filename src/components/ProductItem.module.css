@@ -1,9 +1,24 @@
 .product-item {
+  align-self: center;
+  justify-content: center;
+  justify-self: center;
+  margin: auto;
   font-size: 18px;
+  max-width: 24rem;
+}
+
+.product-image-field {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .product-image {
-  position: relative;
+  width: 22rem;
+  height: 20rem;
+  object-fit: cover;
 }
 
 .product-item h3 {
