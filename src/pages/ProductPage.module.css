@@ -19,6 +19,7 @@
 .product-photos img {
   width: 5rem;
   height: 5rem;
+  object-fit: cover;
 }
 
 .main-product-photo {
@@ -30,6 +31,8 @@
 }
 
 .main-product-photo img {
+  max-width: 35rem;
+  max-height: 45rem;
   min-width: 33rem;
   min-height: 33rem;
   object-fit: contain;

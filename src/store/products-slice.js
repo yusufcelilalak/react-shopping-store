@@ -2,10 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const productSlice = createSlice({
   name: "products",
-  initialState: { productList: [], categories: [], currencies: [] },
+  initialState: {
+    productList: localStorage.getItem("productList")
+      ? JSON.parse(localStorage.getItem("productList"))
+      : [],
+    categories: [],
+    currencies: [],
+  },
   reducers: {
     fillProductList(state, action) {
       state.productList = action.payload;
+      localStorage.setItem("productList", JSON.stringify(state.productList));
     },
     getCategories(state, action) {
       state.categories = action.payload;

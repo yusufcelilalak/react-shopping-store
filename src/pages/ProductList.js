@@ -35,7 +35,7 @@ class ProductList extends Component {
             return product.category === category;
           });
 
-    console.log(this.props.currency);
+    //console.log(this.props.currency);
 
     return (
       <div className={classes["product-list"]}>
@@ -51,9 +51,12 @@ class ProductList extends Component {
                 (price) => price.currency.symbol === this.props.currency[0]
               );
 
+              console.log(product.id);
+
               return (
                 <ProductItem
                   key={product.id}
+                  id={product.id}
                   image={product.gallery[0]}
                   title={product.brand + " " + product.name}
                   price={`${this.props.currency[0]} ${

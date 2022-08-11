@@ -9,7 +9,7 @@ class ColorButton extends Component {
           className={classes["color-button"]}
           type="radio"
           id={this.props.color + this.props.id}
-          name={this.props["attribute-name"] + this.props.id}
+          name={this.props["attribute-name"]}
         />
         <label
           style={{ backgroundColor: this.props.color }}

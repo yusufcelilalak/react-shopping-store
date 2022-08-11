@@ -13,18 +13,19 @@ class Attributes extends Component {
           {this.props.type === "dropdown"
             ? this.props["attribute-name"].charAt(0).toUpperCase() +
               this.props["attribute-name"].slice(1).toLowerCase()
-            : this.props["attribute-name"]}
+            : this.props["attribute-name"].toUpperCase()}
           :
         </div>
         <div className={classes.attributes}>
-          {this.props["attribute-name"] !== "COLOR"
+          {this.props["attribute-name"] !== "Color"
             ? this.props.attributes.map((attribute) => {
                 return (
                   <AttributeButton
-                    id={this.props.id}
+                    key={attribute.value}
+                    id={attribute.value}
                     type={this.props.type}
                     attribute-name={this.props["attribute-name"]}
-                    attribute={attribute}
+                    attribute={attribute.value}
                   >
                     {attribute}
                   </AttributeButton>
@@ -33,10 +34,11 @@ class Attributes extends Component {
             : this.props.attributes.map((attribute) => {
                 return (
                   <ColorButton
-                    id={this.props.id}
+                    key={attribute.value}
+                    id={attribute.value}
                     type={this.props.type}
                     attribute-name={this.props["attribute-name"]}
-                    color={attribute}
+                    color={attribute.value}
                   />
                 );
               })}

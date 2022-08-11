@@ -2,6 +2,7 @@ import { Component } from "react";
 import Card from "./Card";
 import classes from "./ProductItem.module.css";
 import addCart from "../assets/add-cart.svg";
+import { Link } from "react-router-dom";
 
 class ProductItem extends Component {
   constructor() {
@@ -28,13 +29,19 @@ class ProductItem extends Component {
           className={classes["product-item"]}
         >
           <div className={classes["product-image-field"]}>
-            <img
-              className={classes["product-image"]}
-              src={this.props.image}
-              alt={this.props.title}
-            />
+            <Link to={"/products/" + this.props.id}>
+              <img
+                className={classes["product-image"]}
+                src={this.props.image}
+                alt={this.props.title}
+              />
+            </Link>
+
             {this.state.isOver && (
-              <button className={classes["add-cart-btn"]}>
+              <button
+                onClick={() => console.log("Add Cart Button Clicked!")}
+                className={classes["add-cart-btn"]}
+              >
                 <img src={addCart} alt="empty-cart" />
               </button>
             )}

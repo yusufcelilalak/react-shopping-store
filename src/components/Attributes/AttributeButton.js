@@ -18,7 +18,7 @@ class AttributeButton extends Component {
           className={`${classes["attribute-label"]} ${
             classes[this.props.type]
           }`}
-          htmlFor={this.props.attribute + this.props.id}
+          htmlFor={this.props.attribute + this.props["attribute-name"]}
         >
           {this.props.attribute}
         </label>
@@ -30,8 +30,8 @@ class AttributeButton extends Component {
         <input
           className={classes["attribute-button"]}
           type="radio"
-          id={this.props.attribute + this.props.id}
-          name={this.props["attribute-name"] + this.props.id}
+          id={this.props.attribute + this.props["attribute-name"]}
+          name={this.props["attribute-name"]}
         />
         {this.props.attribute === "+"
           ? inputLabel(style)
