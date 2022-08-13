@@ -1,27 +1,38 @@
 import { Component } from "react";
+import { connect } from "react-redux";
 import AttributeButton from "./Attributes/AttributeButton";
 import Attributes from "./Attributes/Attributes";
 import classes from "./CartItem.module.css";
 
 class CartItem extends Component {
   render() {
+    const product = this.props.product;
+    const price = product.prices.find(
+      (price) => price.currency.symbol === this.props.currency[0]
+    );
+
+    console.log(product);
     return (
       <div className={`${classes["cart-item"]} ${classes[this.props.type]}`}>
         <div className={classes["item-info"]}>
-          <h2>{this.props.product.brand}</h2>
-          <h3>{this.props.product.title}</h3>
+          <h2>{product.brand}</h2>
+          <h3>{product.name}</h3>
 
           <div className={classes.price}>
-            ${this.props.product.price.toFixed(2)}
+            {`${this.props.currency[0]}${
+              price !== undefined ? price.amount * product.quantity : ""
+            }`}
           </div>
 
-          {Object.keys(this.props.product.attributes).map((key) => {
+          {product.attributes.map((attribute) => {
             return (
               <Attributes
-                id={this.props.product.id}
+                key={attribute.id}
+                id={product.orderNumber}
                 type={this.props.type}
-                attribute-name={key}
-                attributes={this.props.product.attributes[key]}
+                attribute-name={attribute.id}
+                attributes={attribute.items}
+                selected-attribute={product.selectedAttributes[attribute.id]}
               ></Attributes>
             );
           })}
@@ -29,24 +40,24 @@ class CartItem extends Component {
 
         <div className={classes["adding-actions"]}>
           <AttributeButton
-            id={this.props.product.id}
             type={this.props.type}
             attribute="+"
-            attribute-name="adding-action"
+            attribute-name={product.orderNumber}
+            id="plus"
           />
 
-          <div className={classes.quantity}>{this.props.product.quantity}</div>
+          <div className={classes.quantity}>{product.quantity}</div>
 
           <AttributeButton
-            id={this.props.product.id}
             type={this.props.type}
             attribute="-"
-            attribute-name="adding-action"
+            attribute-name={product.orderNumber}
+            id="minus"
           />
         </div>
 
         <div className={classes["product-photo"]}>
-          <img src={this.props.product.images} alt="clothes" />
+          <img src={product.gallery[0]} alt="clothes" />
           <button className={classes["previous-photo-btn"]}>&lt;</button>
           <button className={classes["next-photo-btn"]}>&gt;</button>
         </div>
@@ -55,4 +66,8 @@ class CartItem extends Component {
   }
 }
 
-export default CartItem;
+const mapStateToProps = (state) => ({
+  currency: state.currency.choosenCurrency,
+});
+
+export default connect(mapStateToProps, null)(CartItem);

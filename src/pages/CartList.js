@@ -1,9 +1,9 @@
 import { Component } from "react";
-
 import classes from "./CartList.module.css";
-import productImage from "../assets/example-product.png";
 import CartItem from "../components/CartItem";
+import { connect } from "react-redux";
 
+/*
 const EXAMPLE_PRODUCTS = [
   {
     id: 1,
@@ -50,36 +50,39 @@ const EXAMPLE_PRODUCTS = [
     your favorite brands.`,
     quantity: 3,
   },
-];
+];*/
 
 class CartList extends Component {
   render() {
-    const totalPrice = EXAMPLE_PRODUCTS.map(
-      (product) => product.price * product.quantity
-    )
-      .reduce((a, b) => a + b)
-      .toFixed(2);
-
-    const totalQuantity = EXAMPLE_PRODUCTS.map(
-      (product) => product.quantity
-    ).reduce((a, b) => a + b);
+    const cart = this.props.cart;
+    const cartList = this.props.cart.productList;
+    const totalPrice = cartList.reduce((prev, curr) => {
+      const currPrice = curr.prices.find(
+        (price) => price.currency.symbol === this.props.currency[0]
+      );
+      return prev + currPrice.amount * curr.quantity;
+    }, 0);
 
     return (
       <div className={classes["cart-list"]}>
         <h1>CART</h1>
-        {EXAMPLE_PRODUCTS.map((product) => {
-          return <CartItem product={product} />;
+        {cartList.map((product) => {
+          return <CartItem type="cart" product={product} />;
         })}
 
         <div className={classes["payment-information"]}>
           <span>Tax 21%:</span>
-          <span className={classes["bold-info"]}>{200 * 0.21}</span>
+          <span className={classes["bold-info"]}>{`${this.props.currency[0]}${
+            totalPrice * 0.21
+          }`}</span>
 
           <span>Quantity:</span>
-          <span className={classes["bold-info"]}>{totalQuantity}</span>
+          <span className={classes["bold-info"]}>{cart.totalQuantity}</span>
 
           <span>Total:</span>
-          <span className={classes["bold-info"]}>{totalPrice}</span>
+          <span
+            className={classes["bold-info"]}
+          >{`${this.props.currency[0]}${totalPrice}`}</span>
         </div>
 
         <div>
@@ -92,4 +95,9 @@ class CartList extends Component {
   }
 }
 
-export default CartList;
+const mapStateToProps = (state) => ({
+  cart: state.cart,
+  currency: state.currency.choosenCurrency,
+});
+
+export default connect(mapStateToProps, null)(CartList);

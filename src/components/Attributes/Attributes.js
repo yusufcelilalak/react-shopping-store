@@ -5,6 +5,11 @@ import classes from "./Attributes.module.css";
 
 class Attributes extends Component {
   render() {
+    console.log(
+      this.props["selected-attribute"],
+      this.props.type,
+      this.props["attribute-name"]
+    );
     return (
       <div>
         <div
@@ -22,10 +27,13 @@ class Attributes extends Component {
                 return (
                   <AttributeButton
                     key={attribute.value}
-                    id={attribute.value}
+                    id={this.props.id}
                     type={this.props.type}
                     attribute-name={this.props["attribute-name"]}
                     attribute={attribute.value}
+                    selected={
+                      this.props["selected-attribute"] === attribute.value
+                    }
                   >
                     {attribute}
                   </AttributeButton>
@@ -35,10 +43,13 @@ class Attributes extends Component {
                 return (
                   <ColorButton
                     key={attribute.value}
-                    id={attribute.value}
+                    id={this.props.id}
                     type={this.props.type}
                     attribute-name={this.props["attribute-name"]}
                     color={attribute.value}
+                    selected={
+                      this.props["selected-attribute"] === attribute.value
+                    }
                   />
                 );
               })}

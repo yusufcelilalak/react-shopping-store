@@ -77,7 +77,12 @@ class Header extends Component {
                 className={classes["cart-btn"]}
               >
                 <img src={emptyCart} alt="empty-cart" />
-                <div className={classes["cart-count"]}>3</div>
+
+                {this.props.cart.totalQuantity !== 0 && (
+                  <div className={classes["cart-count"]}>
+                    {this.props.cart.totalQuantity}
+                  </div>
+                )}
               </button>
 
               {this.state.cartButtonClicked && (
@@ -97,6 +102,7 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   categories: state.products.categories,
   currency: state.currency.choosenCurrency,
+  cart: state.cart,
 });
 
 export default connect(mapStateToProps, null)(Header);

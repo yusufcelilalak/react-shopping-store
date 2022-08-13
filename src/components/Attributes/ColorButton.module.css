@@ -14,7 +14,8 @@
   height: 1rem !important;
 }
 
-.color-button:checked + .color-label {
+.color-button:checked + .color-label,
+.checked-label {
   outline: 1px solid #5ece7b;
 }
 

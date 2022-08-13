@@ -59,7 +59,7 @@ class ProductList extends Component {
                   id={product.id}
                   image={product.gallery[0]}
                   title={product.brand + " " + product.name}
-                  price={`${this.props.currency[0]} ${
+                  price={`${this.props.currency[0]}${
                     price !== undefined ? price.amount : ""
                   }`}
                 />

@@ -13,8 +13,8 @@
 }
 
 .dropdown {
-  width: 1rem !important;
-  height: 1rem !important;
+  width: 1.4rem !important;
+  height: 1.4rem !important;
   font-size: 0.6rem;
 }
 
@@ -22,7 +22,8 @@
   display: none;
 }
 
-.attribute-button:checked + .attribute-label {
+.attribute-button:checked + .attribute-label,
+.checked-label {
   background-color: #1d1f22;
   color: #fff;
 }

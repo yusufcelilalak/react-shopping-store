@@ -4,39 +4,46 @@ import Attributes from "../components/Attributes/Attributes";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
-
-/*const EXAMPLE_PRODUCTS = [
-  {
-    id: 1,
-    images: [clothesImage, clothesImage, clothesImage],
-    brand: "Apollo",
-    title: "Running Short",
-    price: 50.0,
-    attributes: {
-      SIZE: ["XS", "S", "M", "L"],
-      COLOR: ["#D3D2D5", "#2B2B2B", "#0F6450"],
-    },
-    description: `Find stunning women's cocktail dresses and party dresses. Stand out
-    in lace and metallic cocktail dresses and party dresses from all
-    your favorite brands.`,
-  },
-];*/
+import { cartActions } from "../store/cart-slice";
 
 class ProductPage extends Component {
   constructor() {
     super();
     this.state = {
       selectedImage: undefined,
+      inputKeys: 0,
     };
   }
 
   componentDidMount() {
     window.scrollTo(0, 0);
+
+    const product = this.props.products.find(
+      (product) => product.id === this.props.params.id
+    );
+
+    const attributes = {};
+
+    product.attributes.forEach((attribute) => {
+      attributes[`${attribute.id}`] = attribute.items[0].value;
+    });
+
+    console.log(attributes);
+
+    this.props.setSelectedItem({
+      ...product,
+      selectedAttributes: attributes,
+    });
   }
 
   imageClickHandler = (event) => {
     console.log(event.target.src);
     this.setState({ selectedImage: event.target.src });
+  };
+
+  addToCartHandler = (product) => {
+    this.props.addProductToCart(this.props.selectedItem);
+    this.setState({ inputKeys: this.state.inputKeys + 1 });
   };
 
   render() {
@@ -48,10 +55,11 @@ class ProductPage extends Component {
       (price) => price.currency.symbol === this.props.currency[0]
     );
 
-    console.log(product);
+    /*console.log(product);
     console.log(product.attributes.map((attribute) => attribute.id));
     console.log(product.gallery[0]);
     console.log(product.description);
+    */
 
     return (
       <div className={classes["product-page"]}>
@@ -81,7 +89,7 @@ class ProductPage extends Component {
           {product.attributes.map((attribute) => {
             return (
               <Attributes
-                key={attribute.id}
+                key={attribute.id + this.state.inputKeys}
                 type="product-page"
                 attribute-name={attribute.id}
                 attributes={attribute.items}
@@ -91,13 +99,18 @@ class ProductPage extends Component {
           <div>
             <div className={classes["price-label"]}>PRICE:</div>
             <div className={classes.price}>
-              {`${this.props.currency[0]} ${
+              {`${this.props.currency[0]}${
                 price !== undefined ? price.amount : ""
               }`}
             </div>
           </div>
           <div>
-            <button className={classes["add-cart-btn"]}>ADD TO CART</button>
+            <button
+              onClick={() => this.addToCartHandler(product)}
+              className={classes["add-cart-btn"]}
+            >
+              ADD TO CART
+            </button>
           </div>
 
           <div className={classes.description}>
@@ -116,6 +129,18 @@ const withRouter = (Component) => {
 const mapStateToProps = (state) => ({
   products: state.products.productList,
   currency: state.currency.choosenCurrency,
+  selectedItem: state.cart.selectedItem,
 });
 
-export default withRouter(connect(mapStateToProps, null)(ProductPage));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProductToCart: (product) =>
+      dispatch(cartActions.addProductToCart(product)),
+    setSelectedItem: (product) =>
+      dispatch(cartActions.setSelectedItem(product)),
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ProductPage)
+);
