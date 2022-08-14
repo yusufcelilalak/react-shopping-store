@@ -5,6 +5,25 @@ import Attributes from "./Attributes/Attributes";
 import classes from "./CartItem.module.css";
 
 class CartItem extends Component {
+  constructor() {
+    super();
+    this.state = {
+      imageIndex: 0,
+    };
+  }
+
+  showPreviousPhoto = () => {
+    if (this.state.imageIndex <= 0)
+      this.setState({ imageIndex: this.props.product.gallery.length - 1 });
+    else this.setState({ imageIndex: this.state.imageIndex - 1 });
+  };
+
+  showNextPhoto = () => {
+    if (this.state.imageIndex >= this.props.product.gallery.length - 1)
+      this.setState({ imageIndex: 0 });
+    else this.setState({ imageIndex: this.state.imageIndex + 1 });
+  };
+
   render() {
     const product = this.props.product;
     const price = product.prices.find(
@@ -57,9 +76,19 @@ class CartItem extends Component {
         </div>
 
         <div className={classes["product-photo"]}>
-          <img src={product.gallery[0]} alt="clothes" />
-          <button className={classes["previous-photo-btn"]}>&lt;</button>
-          <button className={classes["next-photo-btn"]}>&gt;</button>
+          <img src={product.gallery[this.state.imageIndex]} alt="product" />
+          <button
+            onClick={this.showPreviousPhoto}
+            className={classes["previous-photo-btn"]}
+          >
+            &lt;
+          </button>
+          <button
+            onClick={this.showNextPhoto}
+            className={classes["next-photo-btn"]}
+          >
+            &gt;
+          </button>
         </div>
       </div>
     );

@@ -21,6 +21,8 @@ class ProductItem extends Component {
   };
 
   render() {
+    const notInStock = this.props.inStock === false ? "not-in-stock" : "";
+
     return (
       <li className={classes["list-item"]}>
         <Card
@@ -31,10 +33,16 @@ class ProductItem extends Component {
           <div className={classes["product-image-field"]}>
             <Link to={"/products/" + this.props.id}>
               <img
-                className={classes["product-image"]}
+                className={`${classes["product-image"]} ${classes[notInStock]}`}
                 src={this.props.image}
                 alt={this.props.title}
               />
+              <div
+                className={classes["not-in-stock-text"]}
+                hidden={!notInStock}
+              >
+                OUT OF STOCK
+              </div>
             </Link>
 
             {this.state.isOver && (

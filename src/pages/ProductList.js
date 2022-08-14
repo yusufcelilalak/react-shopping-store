@@ -51,7 +51,7 @@ class ProductList extends Component {
                 (price) => price.currency.symbol === this.props.currency[0]
               );
 
-              console.log(product.id);
+              console.log(product);
 
               return (
                 <ProductItem
@@ -62,6 +62,7 @@ class ProductList extends Component {
                   price={`${this.props.currency[0]}${
                     price !== undefined ? price.amount : ""
                   }`}
+                  inStock={product.inStock}
                 />
               );
             })}
