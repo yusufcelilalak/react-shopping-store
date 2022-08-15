@@ -8,6 +8,7 @@ const productSlice = createSlice({
       : [],
     categories: [],
     currencies: [],
+    defaultSelectedProduct: {},
   },
   reducers: {
     fillProductList(state, action) {
@@ -19,6 +20,23 @@ const productSlice = createSlice({
     },
     getCurrencies(state, action) {
       state.currencies = action.payload;
+    },
+
+    setDefaultProduct(state, action) {
+      const product = state.productList.find((product) => {
+        return product.id === action.payload;
+      });
+
+      const attributes = {};
+
+      product.attributes.forEach((attribute) => {
+        attributes[`${attribute.id}`] = attribute.items[0].value;
+      });
+
+      state.defaultSelectedProduct = {
+        ...product,
+        selectedAttributes: attributes,
+      };
     },
   },
 });

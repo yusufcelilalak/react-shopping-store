@@ -27,7 +27,13 @@ class CartDropdown extends Component {
             My Bag, <span>{cart.totalQuantity} items</span>
           </div>
           {cartList.map((product) => {
-            return <CartItem type="dropdown" product={product} />;
+            return (
+              <CartItem
+                key={product.orderNumber}
+                type="dropdown"
+                product={product}
+              />
+            );
           })}
 
           <div className={classes["total-price"]}>

@@ -3,12 +3,16 @@ import Card from "./Card";
 import classes from "./ProductItem.module.css";
 import addCart from "../assets/add-cart.svg";
 import { Link } from "react-router-dom";
+import { productsActions } from "../store/products-slice";
+import { connect } from "react-redux";
+import { cartActions } from "../store/cart-slice";
 
 class ProductItem extends Component {
   constructor() {
     super();
     this.state = {
       isOver: false,
+      defaultProduct: {},
     };
   }
 
@@ -18,6 +22,31 @@ class ProductItem extends Component {
 
   productMouseOutHandler = () => {
     this.setState({ isOver: false });
+  };
+
+  componentDidMount() {
+    const product = this.props.products.find(
+      (product) => product.id === this.props.id
+    );
+
+    const attributes = {};
+
+    product.attributes.forEach((attribute) => {
+      attributes[`${attribute.id}`] = attribute.items[0].value;
+    });
+
+    this.setState({
+      defaultProduct: { ...product, selectedAttributes: attributes },
+    });
+  }
+
+  addtoCartHandler = (event) => {
+    //this.props.setDefaultProduct(event.currentTarget.id);
+    //const product = this.props.defaultSelectedProduct;
+
+    this.props.setSelectedItem(this.state.defaultProduct);
+
+    this.props.addProductToCart();
   };
 
   render() {
@@ -47,7 +76,8 @@ class ProductItem extends Component {
 
             {this.state.isOver && (
               <button
-                onClick={() => console.log("Add Cart Button Clicked!")}
+                id={this.props.id}
+                onClick={this.addtoCartHandler}
                 className={classes["add-cart-btn"]}
               >
                 <img src={addCart} alt="empty-cart" />
@@ -62,4 +92,19 @@ class ProductItem extends Component {
   }
 }
 
-export default ProductItem;
+const mapStateToProps = (state) => ({
+  products: state.products.productList,
+  selectedItem: state.cart.selectedItem,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProductToCart: () => dispatch(cartActions.addProductToCart()),
+    setSelectedItem: (product) =>
+      dispatch(cartActions.setSelectedItem(product)),
+    setDefaultProduct: (productId) =>
+      dispatch(productsActions.setDefaultProduct(productId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductItem);

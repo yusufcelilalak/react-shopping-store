@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
 import { cartActions } from "../store/cart-slice";
+import { productsActions } from "../store/products-slice";
 
 class ProductPage extends Component {
   constructor() {
@@ -18,22 +19,16 @@ class ProductPage extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    const product = this.props.products.find(
-      (product) => product.id === this.props.params.id
-    );
+    this.props.setDefaultProduct(this.props.params.id);
+  }
 
-    const attributes = {};
-
-    product.attributes.forEach((attribute) => {
-      attributes[`${attribute.id}`] = attribute.items[0].value;
-    });
-
-    console.log(attributes);
-
-    this.props.setSelectedItem({
-      ...product,
-      selectedAttributes: attributes,
-    });
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.defaultSelectedProduct !== this.props.defaultSelectedProduct
+    ) {
+      const product = this.props.defaultSelectedProduct;
+      this.props.setSelectedItem(product);
+    }
   }
 
   imageClickHandler = (event) => {
@@ -42,8 +37,9 @@ class ProductPage extends Component {
   };
 
   addToCartHandler = (product) => {
-    this.props.addProductToCart(this.props.selectedItem);
+    this.props.addProductToCart();
     this.setState({ inputKeys: this.state.inputKeys + 1 });
+    this.props.setDefaultProduct(this.props.params.id);
   };
 
   render() {
@@ -130,14 +126,16 @@ const mapStateToProps = (state) => ({
   products: state.products.productList,
   currency: state.currency.choosenCurrency,
   selectedItem: state.cart.selectedItem,
+  defaultSelectedProduct: state.products.defaultSelectedProduct,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addProductToCart: (product) =>
-      dispatch(cartActions.addProductToCart(product)),
+    addProductToCart: () => dispatch(cartActions.addProductToCart()),
     setSelectedItem: (product) =>
       dispatch(cartActions.setSelectedItem(product)),
+    setDefaultProduct: (productId) =>
+      dispatch(productsActions.setDefaultProduct(productId)),
   };
 };
 

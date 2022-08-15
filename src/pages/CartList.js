@@ -67,7 +67,9 @@ class CartList extends Component {
       <div className={classes["cart-list"]}>
         <h1>CART</h1>
         {cartList.map((product) => {
-          return <CartItem type="cart" product={product} />;
+          return (
+            <CartItem key={product.orderNumber} type="cart" product={product} />
+          );
         })}
 
         <div className={classes["payment-information"]}>

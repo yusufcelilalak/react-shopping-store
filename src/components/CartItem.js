@@ -25,6 +25,7 @@ class CartItem extends Component {
   };
 
   render() {
+    console.log("image index: " + this.state.imageIndex);
     const product = this.props.product;
     const price = product.prices.find(
       (price) => price.currency.symbol === this.props.currency[0]
