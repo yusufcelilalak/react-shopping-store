@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import AttributeButton from "./Attributes/AttributeButton";
 import Attributes from "./Attributes/Attributes";
@@ -81,18 +81,24 @@ class CartItem extends Component {
 
         <div className={classes["product-photo"]}>
           <img src={product.gallery[this.state.imageIndex]} alt="product" />
-          <button
-            onClick={this.showPreviousPhoto}
-            className={classes["previous-photo-btn"]}
-          >
-            &lt;
-          </button>
-          <button
-            onClick={this.showNextPhoto}
-            className={classes["next-photo-btn"]}
-          >
-            &gt;
-          </button>
+          {product.gallery.length > 1 ? (
+            <Fragment>
+              <button
+                onClick={this.showPreviousPhoto}
+                className={classes["previous-photo-btn"]}
+              >
+                &lt;
+              </button>
+              <button
+                onClick={this.showNextPhoto}
+                className={classes["next-photo-btn"]}
+              >
+                &gt;
+              </button>
+            </Fragment>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );
