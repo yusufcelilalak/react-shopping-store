@@ -7,25 +7,25 @@ import { useParams } from "react-router-dom";
 
 class ProductList extends Component {
   render() {
-    // the first item is "all" in the given database
+    // the first category is in the given database
     const categoryListFirstItem =
       this.props.categories[0] !== undefined
         ? this.props.categories[0].name
         : "";
 
+    // if the current link directory is empty, set category as first category, otherwise set category as link's directory
     const category =
       this.props.params.category === undefined
         ? categoryListFirstItem
         : this.props.params.category;
 
+    // in the given database first category includes all items. do filter for other categories
     const filteredProducts =
       category === categoryListFirstItem
         ? this.props.products
         : this.props.products.filter((product) => {
             return product.category === category;
           });
-
-    //console.log(this.props.currency);
 
     return (
       <div className={classes["product-list"]}>
@@ -40,8 +40,6 @@ class ProductList extends Component {
               const price = product.prices.find(
                 (price) => price.currency.symbol === this.props.currency[0]
               );
-
-              //console.log(product);
 
               return (
                 <ProductItem
@@ -58,7 +56,7 @@ class ProductList extends Component {
             })}
           </ul>
         </div>
-        <div className={classes["temp-footer"]}></div>
+        <footer></footer>
       </div>
     );
   }

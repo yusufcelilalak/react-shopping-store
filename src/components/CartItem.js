@@ -8,7 +8,7 @@ class CartItem extends Component {
   constructor() {
     super();
     this.state = {
-      imageIndex: 0,
+      imageIndex: 0, // index used for displaying images when buttons clicked
     };
   }
 
@@ -25,13 +25,11 @@ class CartItem extends Component {
   };
 
   render() {
-    console.log("image index: " + this.state.imageIndex);
     const product = this.props.product;
     const price = product.prices.find(
       (price) => price.currency.symbol === this.props.currency[0]
     );
 
-    console.log(product);
     return (
       <div className={`${classes["cart-item"]} ${classes[this.props.type]}`}>
         <div className={classes["item-info"]}>
@@ -40,7 +38,9 @@ class CartItem extends Component {
 
           <div className={classes.price}>
             {`${this.props.currency[0]}${
-              price !== undefined ? price.amount * product.quantity : ""
+              price !== undefined
+                ? (price.amount * product.quantity).toFixed(2)
+                : ""
             }`}
           </div>
 
@@ -53,6 +53,7 @@ class CartItem extends Component {
                 attribute-name={attribute.id}
                 attributes={attribute.items}
                 selected-attribute={product.selectedAttributes[attribute.id]}
+                attribute-type={attribute.type}
               ></Attributes>
             );
           })}
@@ -64,6 +65,7 @@ class CartItem extends Component {
             attribute="+"
             attribute-name={product.orderNumber}
             id="plus"
+            attribute-type="text"
           />
 
           <div className={classes.quantity}>{product.quantity}</div>
@@ -73,6 +75,7 @@ class CartItem extends Component {
             attribute="-"
             attribute-name={product.orderNumber}
             id="minus"
+            attribute-type="text"
           />
         </div>
 

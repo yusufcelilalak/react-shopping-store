@@ -4,12 +4,8 @@ import ColorButton from "./ColorButton";
 import classes from "./Attributes.module.css";
 
 class Attributes extends Component {
+  // if attribute type is swatch, display color button, otherwise display default attribute button
   render() {
-    console.log(
-      this.props["selected-attribute"],
-      this.props.type,
-      this.props["attribute-name"]
-    );
     return (
       <div>
         <div
@@ -22,7 +18,7 @@ class Attributes extends Component {
           :
         </div>
         <div className={classes.attributes}>
-          {this.props["attribute-name"] !== "Color"
+          {this.props["attribute-type"] !== "swatch"
             ? this.props.attributes.map((attribute) => {
                 return (
                   <AttributeButton

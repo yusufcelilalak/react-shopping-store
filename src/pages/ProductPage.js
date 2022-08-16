@@ -11,7 +11,7 @@ class ProductPage extends Component {
   constructor() {
     super();
     this.state = {
-      selectedImage: undefined,
+      selectedImage: undefined, // for displaying selected image in gallery
       inputKeys: 0,
     };
   }
@@ -31,6 +31,7 @@ class ProductPage extends Component {
     }
   }
 
+  // set selected image as main image
   imageClickHandler = (event) => {
     console.log(event.target.src);
     this.setState({ selectedImage: event.target.src });
@@ -43,6 +44,9 @@ class ProductPage extends Component {
   };
 
   render() {
+    // wait displaying page until data is loaded
+    if (this.props.isDataLoaded === false) return null;
+
     const product = this.props.products.find(
       (product) => product.id === this.props.params.id
     );
@@ -51,11 +55,7 @@ class ProductPage extends Component {
       (price) => price.currency.symbol === this.props.currency[0]
     );
 
-    /*console.log(product);
-    console.log(product.attributes.map((attribute) => attribute.id));
-    console.log(product.gallery[0]);
-    console.log(product.description);
-    */
+    const notInStock = product.inStock === false ? "not-in-stock" : "";
 
     return (
       <div className={classes["product-page"]}>
@@ -66,29 +66,34 @@ class ProductPage extends Component {
                 onClick={this.imageClickHandler}
                 key={image}
                 src={image}
+                className={classes[notInStock]}
                 alt="clothes"
               />
             );
           })}
         </div>
         <div className={classes["main-product-photo"]}>
-          {
-            <img
-              src={this.state.selectedImage || product.gallery[0]}
-              alt="clothes"
-            />
-          }
+          <img
+            className={classes[notInStock]}
+            src={this.state.selectedImage || product.gallery[0]}
+            alt="clothes"
+          />
+          <div className={classes["not-in-stock-text"]} hidden={!notInStock}>
+            OUT OF STOCK
+          </div>
         </div>
         <div className={classes["product-information"]}>
           <h1>{product.brand}</h1>
           <h2>{product.name}</h2>
           {product.attributes.map((attribute) => {
+            console.log(attribute.type);
             return (
               <Attributes
                 key={attribute.id + this.state.inputKeys}
                 type="product-page"
                 attribute-name={attribute.id}
                 attributes={attribute.items}
+                attribute-type={attribute.type}
               ></Attributes>
             );
           })}
@@ -100,13 +105,17 @@ class ProductPage extends Component {
               }`}
             </div>
           </div>
-          <div>
-            <button
-              onClick={() => this.addToCartHandler(product)}
-              className={classes["add-cart-btn"]}
-            >
-              ADD TO CART
-            </button>
+          <div className={classes["not-in-stock-info"]}>
+            {product.inStock !== false ? (
+              <button
+                onClick={() => this.addToCartHandler(product)}
+                className={classes["add-cart-btn"]}
+              >
+                ADD TO CART
+              </button>
+            ) : (
+              "Product is not in stock at the moment, please view other products."
+            )}
           </div>
 
           <div className={classes.description}>
@@ -127,6 +136,7 @@ const mapStateToProps = (state) => ({
   currency: state.currency.choosenCurrency,
   selectedItem: state.cart.selectedItem,
   defaultSelectedProduct: state.products.defaultSelectedProduct,
+  isDataLoaded: state.products.isDataLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => {

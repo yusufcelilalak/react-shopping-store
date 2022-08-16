@@ -4,6 +4,7 @@ import { cartActions } from "../../store/cart-slice";
 import classes from "./AttributeButton.module.css";
 
 class AttributeButton extends Component {
+  // set selected item when attribute change
   attributeChangeHandler = (event) => {
     const product = { ...this.props.selectedItem };
     const attributeName = event.target.name;
@@ -20,6 +21,7 @@ class AttributeButton extends Component {
     this.props.setSelectedItem(updatedItem);
   };
 
+  // if button is used to increase and decrease quantity, set item quantity
   attributeClickHandler = (event) => {
     const operation = event.target.id[0];
     const [productOrderNumber, operationName] = event.target.id
@@ -46,23 +48,19 @@ class AttributeButton extends Component {
       fontSize: "2rem",
     };
 
+    // if the attribute is selected, make radio button checked
     const isSelected =
       this.props.selected !== false
         ? { defaultChecked: this.props.selected }
         : {};
 
+    // if attribute button isn't in product page, don't allow changes by user. (can't change attributes in cart)
     const isProductPage =
       this.props.type === "product-page" ||
       this.props.attribute === "+" ||
       this.props.attribute === "-"
         ? {}
         : { disabled: 1 };
-
-    console.log(
-      this.props.selected,
-      this.props.id,
-      this.props["attribute-name"]
-    );
 
     const inputLabel = (_style) => {
       return (

@@ -3,11 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    productList: [],
-    totalQuantity: 0,
+    // added products in cart
+    productList: localStorage.getItem("cartList")
+      ? JSON.parse(localStorage.getItem("cartList"))
+      : [],
+    // total quantity of all products
+    totalQuantity: localStorage.getItem("totalQuantity")
+      ? localStorage.getItem("totalQuantity")
+      : 0,
+    // it is stored in temporary item when item attributes changed by user
     selectedItem: {},
   },
   reducers: {
+    // adding selected item into cart
     addProductToCart(state) {
       const existingItemIndex = state.productList.findIndex(
         (item) =>
@@ -15,8 +23,9 @@ const cartSlice = createSlice({
           JSON.stringify(item.selectedAttributes) ===
             JSON.stringify(state.selectedItem.selectedAttributes)
       );
-      console.log(existingItemIndex);
+
       state.totalQuantity++;
+
       if (existingItemIndex === -1) {
         state.productList.push({
           ...state.selectedItem,
@@ -26,6 +35,9 @@ const cartSlice = createSlice({
       } else {
         state.productList[existingItemIndex].quantity++;
       }
+
+      localStorage.setItem("cartList", JSON.stringify(state.productList));
+      localStorage.setItem("totalQuantity", state.totalQuantity);
     },
 
     increaseProductQuantity(state, action) {
@@ -37,6 +49,9 @@ const cartSlice = createSlice({
 
       state.totalQuantity++;
       existingItem.quantity++;
+
+      localStorage.setItem("cartList", JSON.stringify(state.productList));
+      localStorage.setItem("totalQuantity", state.totalQuantity);
     },
 
     removeProductFromCart(state, action) {
@@ -56,11 +71,17 @@ const cartSlice = createSlice({
         existingItem.quantity--;
       }
 
-      //console.log(current(state));
+      localStorage.setItem("cartList", JSON.stringify(state.productList));
+      localStorage.setItem("totalQuantity", state.totalQuantity);
     },
 
     setSelectedItem(state, action) {
       state.selectedItem = action.payload;
+    },
+
+    orderProducts(state) {
+      state.productList = [];
+      state.totalQuantity = 0;
     },
   },
 });

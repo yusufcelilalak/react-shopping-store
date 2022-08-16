@@ -3,12 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 const productSlice = createSlice({
   name: "products",
   initialState: {
+    // store all product list which is taken by graphql
     productList: localStorage.getItem("productList")
       ? JSON.parse(localStorage.getItem("productList"))
       : [],
+    // store all categories to display links on navbar
     categories: [],
+    // store all currencies to display currencies on navbar
     currencies: [],
+    // temporary default item to add cart if user don't choose any attribute
     defaultSelectedProduct: {},
+    // check if all data loaded from graphql
+    isDataLoaded: false,
   },
   reducers: {
     fillProductList(state, action) {
@@ -27,16 +33,22 @@ const productSlice = createSlice({
         return product.id === action.payload;
       });
 
-      const attributes = {};
+      if (product !== undefined) {
+        const attributes = {};
 
-      product.attributes.forEach((attribute) => {
-        attributes[`${attribute.id}`] = attribute.items[0].value;
-      });
+        product.attributes.forEach((attribute) => {
+          attributes[`${attribute.id}`] = attribute.items[0].value;
+        });
 
-      state.defaultSelectedProduct = {
-        ...product,
-        selectedAttributes: attributes,
-      };
+        state.defaultSelectedProduct = {
+          ...product,
+          selectedAttributes: attributes,
+        };
+      }
+    },
+
+    setDataLoaded(state) {
+      state.isDataLoaded = true;
     },
   },
 });

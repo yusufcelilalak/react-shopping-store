@@ -33,6 +33,7 @@
   justify-content: space-between;
   width: 87%;
   margin: 2rem auto;
+  gap: 1rem;
 }
 
 .control-buttons button {
@@ -50,4 +51,10 @@
 .check-out-btn {
   background: #5ece7b;
   color: #fff;
+}
+
+.order-successful p {
+  margin: 2rem 0.8rem;
+  font-size: 1rem;
+  font-weight: 400;
 }

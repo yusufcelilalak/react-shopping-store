@@ -59,3 +59,8 @@
   background-color: #5ece7b;
   border-radius: 50%;
 }
+
+.not-in-stock-button {
+  background-color: rgb(199, 71, 71);
+  cursor: default;
+}

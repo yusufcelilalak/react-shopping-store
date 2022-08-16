@@ -22,7 +22,11 @@ class Header extends Component {
   };
 
   render() {
-    //console.log(this.props.categories);
+    const firstCategory =
+      this.props.categories[0] !== undefined
+        ? this.props.categories[0].name
+        : "";
+
     return (
       <header>
         <div onMouseLeave={this.mouseLeaveHandler} className={classes.navbar}>
@@ -35,7 +39,9 @@ class Header extends Component {
                       className={({ isActive }) =>
                         isActive ? classes.active : undefined
                       }
-                      to={`/${category.name === "all" ? "" : category.name}`}
+                      to={`/${
+                        category.name === firstCategory ? "" : category.name
+                      }`}
                     >
                       {category.name.toUpperCase()}
                     </NavLink>
@@ -78,7 +84,7 @@ class Header extends Component {
               >
                 <img src={emptyCart} alt="empty-cart" />
 
-                {this.props.cart.totalQuantity !== 0 && (
+                {+this.props.cart.totalQuantity !== 0 && (
                   <div className={classes["cart-count"]}>
                     {this.props.cart.totalQuantity}
                   </div>

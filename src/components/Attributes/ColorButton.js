@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import { cartActions } from "../../store/cart-slice";
 import classes from "./ColorButton.module.css";
 
+// special component designed for the attributes which has type swatch
 class ColorButton extends Component {
+  // set selected item when attribute change
   attributeChangeHandler = (event) => {
     const product = { ...this.props.selectedItem };
     const attributeName = event.target.name;
@@ -25,11 +27,13 @@ class ColorButton extends Component {
   };
 
   render() {
+    // if the attribute is selected, make radio button checked
     const isSelected =
       this.props.selected !== false
         ? { defaultChecked: this.props.selected }
         : {};
 
+    // if attribute button isn't in product page, don't allow changes by user. (can't change attributes in cart)
     const isProductPage =
       this.props.type === "product-page" ? {} : { disabled: 1 };
     return (

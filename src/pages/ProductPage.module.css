@@ -20,14 +20,17 @@
   width: 5rem;
   height: 5rem;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .main-product-photo {
+  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   margin: 0;
   padding: 0;
+  max-height: 45rem;
 }
 
 .main-product-photo img {
@@ -36,6 +39,25 @@
   min-width: 33rem;
   min-height: 33rem;
   object-fit: contain;
+}
+
+.not-in-stock {
+  opacity: 0.5;
+}
+
+.not-in-stock-text {
+  position: absolute;
+  color: #8d8f9a;
+  font-size: 2rem;
+  font-weight: 400;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.not-in-stock-info {
+  color: rgb(199, 71, 71);
+  margin: 1rem 0;
 }
 
 .product-information {

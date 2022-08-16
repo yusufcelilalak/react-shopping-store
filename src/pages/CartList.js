@@ -2,57 +2,24 @@ import { Component } from "react";
 import classes from "./CartList.module.css";
 import CartItem from "../components/CartItem";
 import { connect } from "react-redux";
-
-/*
-const EXAMPLE_PRODUCTS = [
-  {
-    id: 1,
-    images: productImage,
-    brand: "Apollo",
-    title: "Running Short",
-    price: 50.0,
-    attributes: {
-      SIZE: ["XS", "S", "M", "L"],
-      COLOR: ["#D3D2D5", "#2B2B2B", "#0F6450"],
-    },
-    description: `Find stunning women's cocktail dresses and party dresses. Stand out
-    in lace and metallic cocktail dresses and party dresses from all
-    your favorite brands.`,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    images: productImage,
-    brand: "Jupiter",
-    title: "Wayferer",
-    price: 75.0,
-    attributes: {
-      SIZE: ["S", "M"],
-      COLOR: ["#1D1F22", "#15A4C3", "#EA8120"],
-    },
-    description: `Find stunning women's cocktail dresses and party dresses. Stand out
-    in lace and metallic cocktail dresses and party dresses from all
-    your favorite brands.`,
-    quantity: 2,
-  },
-  {
-    id: 3,
-    images: productImage,
-    brand: "Jupiter",
-    title: "Wayferer",
-    price: 75.0,
-    attributes: {
-      SIZE: ["S", "M"],
-      COLOR: ["#1D1F22", "#15A4C3", "#EA8120"],
-    },
-    description: `Find stunning women's cocktail dresses and party dresses. Stand out
-    in lace and metallic cocktail dresses and party dresses from all
-    your favorite brands.`,
-    quantity: 3,
-  },
-];*/
+import { cartActions } from "../store/cart-slice";
 
 class CartList extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isOrdered: false,
+    };
+  }
+
+  // order handler to order products and display thanks message on page
+  orderProductsHandler = () => {
+    if (this.props.cart.productList.length > 0) {
+      this.props.orderProducts();
+      this.setState({ isOrdered: true });
+    }
+  };
+
   render() {
     const cart = this.props.cart;
     const cartList = this.props.cart.productList;
@@ -63,9 +30,11 @@ class CartList extends Component {
       return prev + currPrice.amount * curr.quantity;
     }, 0);
 
-    return (
+    // check if user already ordered products or not and return content
+    return this.state.isOrdered === false ? (
       <div className={classes["cart-list"]}>
         <h1>CART</h1>
+
         {cartList.map((product) => {
           return (
             <CartItem key={product.orderNumber} type="cart" product={product} />
@@ -74,24 +43,35 @@ class CartList extends Component {
 
         <div className={classes["payment-information"]}>
           <span>Tax 21%:</span>
-          <span className={classes["bold-info"]}>{`${this.props.currency[0]}${
+          <span className={classes["bold-info"]}>{`${this.props.currency[0]}${(
             totalPrice * 0.21
-          }`}</span>
+          ).toFixed(2)}`}</span>
 
           <span>Quantity:</span>
           <span className={classes["bold-info"]}>{cart.totalQuantity}</span>
 
           <span>Total:</span>
-          <span
-            className={classes["bold-info"]}
-          >{`${this.props.currency[0]}${totalPrice}`}</span>
+          <span className={classes["bold-info"]}>{`${
+            this.props.currency[0]
+          }${totalPrice.toFixed(2)}`}</span>
         </div>
 
         <div>
-          <button className={classes["order-btn"]}>ORDER</button>
+          <button
+            onClick={this.orderProductsHandler}
+            className={classes["order-btn"]}
+          >
+            ORDER
+          </button>
         </div>
 
         <footer></footer>
+      </div>
+    ) : (
+      <div className={classes["order-successful"]}>
+        Thank you for your order!
+        <br />
+        <br /> We hope you enjoy your new products. Have a great day :-)
       </div>
     );
   }
@@ -102,4 +82,8 @@ const mapStateToProps = (state) => ({
   currency: state.currency.choosenCurrency,
 });
 
-export default connect(mapStateToProps, null)(CartList);
+const mapDispatchToProps = (dispatch) => {
+  return { orderProducts: () => dispatch(cartActions.orderProducts()) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartList);

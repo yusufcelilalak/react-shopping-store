@@ -11,7 +11,7 @@ class ProductItem extends Component {
   constructor() {
     super();
     this.state = {
-      isOver: false,
+      isOver: false, // if mouse over on product display button for buying
       defaultProduct: {},
     };
   }
@@ -41,9 +41,6 @@ class ProductItem extends Component {
   }
 
   addtoCartHandler = (event) => {
-    //this.props.setDefaultProduct(event.currentTarget.id);
-    //const product = this.props.defaultSelectedProduct;
-
     this.props.setSelectedItem(this.state.defaultProduct);
 
     this.props.addProductToCart();
@@ -77,8 +74,12 @@ class ProductItem extends Component {
             {this.state.isOver && (
               <button
                 id={this.props.id}
-                onClick={this.addtoCartHandler}
-                className={classes["add-cart-btn"]}
+                onClick={
+                  this.props.inStock === true ? this.addtoCartHandler : ""
+                }
+                className={`${classes["add-cart-btn"]} ${
+                  notInStock !== "" ? classes["not-in-stock-button"] : ""
+                }`}
               >
                 <img src={addCart} alt="empty-cart" />
               </button>

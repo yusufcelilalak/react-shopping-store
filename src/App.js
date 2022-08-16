@@ -17,6 +17,7 @@ import { productsActions } from "./store/products-slice";
 import { currencyActions } from "./store/currency-slice";
 
 class App extends Component {
+  // storing graphql data in redux store when component mounted
   componentDidMount() {
     client
       .query({
@@ -24,6 +25,7 @@ class App extends Component {
       })
       .then((response) => {
         this.props.fillProductList(response.data.category.products);
+        console.log(response.data.category.products);
       });
 
     client
@@ -39,11 +41,16 @@ class App extends Component {
         query: GET_CURRENCIES,
       })
       .then((response) => {
-        this.props.changeCurrency([
-          response.data.currencies[0].symbol,
-          response.data.currencies[0].label,
-        ]);
+        // check if there is currency data in redux store which comes from local storage
+        if (this.props.currency.length === 0) {
+          this.props.changeCurrency([
+            response.data.currencies[0].symbol,
+            response.data.currencies[0].label,
+          ]);
+        }
+
         this.props.getCurrencies(response.data.currencies);
+        this.props.setDataLoaded();
       });
   }
 
@@ -62,6 +69,10 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  currency: state.currency.choosenCurrency,
+});
+
 const mapDispatchToProps = (dispatch) => {
   return {
     fillProductList: (products) =>
@@ -72,7 +83,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(productsActions.getCurrencies(currencies)),
     changeCurrency: (currency) =>
       dispatch(currencyActions.changeCurreny(currency)),
+    setDataLoaded: () => dispatch(productsActions.setDataLoaded()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
