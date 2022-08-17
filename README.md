@@ -1,8 +1,10 @@
 # About
 This project is a website of fictional shopping store which is made with ReactJS. For the database, endpoint taken from GraphQl with Apollo Client and also Redux used to make processes with data in the application. 
-</br>
+<br/>
 <br/>
 GraplQL Endpoint: https://github.com/scandiweb/junior-react-endpoint
+</br>
+<br/>
 Design of page: https://www.figma.com/file/MSyCAqVy1UgNap0pvqH6H3/Junior-Frontend-Test-Designs-(Public)?node-id=0%3A1
 
 ## Screenshots From Project ( 1440x900 )
