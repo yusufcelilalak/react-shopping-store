@@ -13,6 +13,7 @@ class ProductPage extends Component {
     this.state = {
       selectedImage: undefined, // for displaying selected image in gallery
       inputKeys: 0,
+      defaultProduct: {},
     };
   }
 
@@ -24,10 +25,19 @@ class ProductPage extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevProps.defaultSelectedProduct !== this.props.defaultSelectedProduct
+      JSON.stringify(prevProps.defaultSelectedProduct) !==
+      JSON.stringify(this.props.defaultSelectedProduct)
     ) {
       const product = this.props.defaultSelectedProduct;
       this.props.setSelectedItem(product);
+      this.setState({ defaultProduct: product });
+    }
+
+    if (prevProps.isDataLoaded !== this.props.isDataLoaded) {
+      this.props.setDefaultProduct(this.props.params.id);
+      //const product = this.props.defaultSelectedProduct;
+      //console.log(product);
+      //this.props.setSelectedItem(product);
     }
   }
 
@@ -40,7 +50,7 @@ class ProductPage extends Component {
   addToCartHandler = (product) => {
     this.props.addProductToCart();
     this.setState({ inputKeys: this.state.inputKeys + 1 });
-    this.props.setDefaultProduct(this.props.params.id);
+    this.props.setSelectedItem(this.state.defaultProduct);
   };
 
   render() {

@@ -6,19 +6,22 @@ import classes from "./AttributeButton.module.css";
 class AttributeButton extends Component {
   // set selected item when attribute change
   attributeChangeHandler = (event) => {
-    const product = { ...this.props.selectedItem };
-    const attributeName = event.target.name;
     const attributeValue = event.target.id.replace(
       `-${this.props["attribute-name"]}-${this.props.id}`,
       ""
     );
 
-    const attributeObject = { ...product.selectedAttributes };
-    attributeObject[attributeName] = attributeValue;
+    if (attributeValue !== "+" && attributeValue !== "-") {
+      const attributeName = event.target.name;
+      const product = { ...this.props.selectedItem };
 
-    const updatedItem = { ...product, selectedAttributes: attributeObject };
+      const attributeObject = { ...product.selectedAttributes };
+      attributeObject[attributeName] = attributeValue;
 
-    this.props.setSelectedItem(updatedItem);
+      const updatedItem = { ...product, selectedAttributes: attributeObject };
+
+      this.props.setSelectedItem(updatedItem);
+    }
   };
 
   // if button is used to increase and decrease quantity, set item quantity
