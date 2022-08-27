@@ -34,14 +34,11 @@ class CartDropdown extends Component {
     return this.state.isOrdered === false ? (
       <Fragment>
         <div
-          onMouseEnter={this.props.onMouseLeave}
+          onMouseDown={this.props.onCloseDropdown}
           className={classes.backdrop}
         ></div>
 
-        <div
-          onMouseLeave={this.props.onMouseLeave}
-          className={`${this.props.className}`}
-        >
+        <div className={`${this.props.className}`}>
           <div className={classes["cart-summary-title"]}>
             My Bag, <span>{cart.totalQuantity} items</span>
           </div>
@@ -63,7 +60,7 @@ class CartDropdown extends Component {
           <div className={classes["control-buttons"]}>
             <Link to="/cart">
               <button
-                onClick={this.props.onMouseLeave}
+                onClick={this.props.onCloseDropdown}
                 className={classes["view-bag-btn"]}
               >
                 VIEW BAG
@@ -81,7 +78,6 @@ class CartDropdown extends Component {
     ) : (
       <Fragment>
         <div
-          onMouseLeave={this.props.onMouseLeave}
           className={`${this.props.className} ${classes["order-successful"]} `}
         >
           <p>
@@ -91,7 +87,7 @@ class CartDropdown extends Component {
           </p>
         </div>
         <div
-          onMouseEnter={this.props.onMouseLeave}
+          onMouseDown={this.props.onCloseDropdown}
           className={classes.backdrop}
         ></div>
       </Fragment>

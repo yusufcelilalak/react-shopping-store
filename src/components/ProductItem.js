@@ -75,7 +75,7 @@ class ProductItem extends Component {
               <button
                 id={this.props.id}
                 onClick={
-                  this.props.inStock === true ? this.addtoCartHandler : ""
+                  this.props.inStock === true ? this.addtoCartHandler : null
                 }
                 className={`${classes["add-cart-btn"]} ${
                   notInStock !== "" ? classes["not-in-stock-button"] : ""

@@ -8,7 +8,7 @@ class CurrencyDropdown extends Component {
   currencyChangeHandler = (event) => {
     const currency = event.target.innerHTML.split(" ");
     this.props.changeCurrency(currency);
-    this.props.onMouseLeave();
+    this.props.onCloseDropdown();
   };
 
   render() {

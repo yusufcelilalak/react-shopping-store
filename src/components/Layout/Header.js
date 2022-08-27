@@ -7,6 +7,7 @@ import emptyCart from "../../assets/empty-cart.svg";
 import CartDropdown from "../Dropdown/CartDropdown";
 import CurrencyDropdown from "../Dropdown/CurrencyDropdown";
 import { connect } from "react-redux";
+import OutsideAlerter from "../OutsideAlerter";
 
 class Header extends Component {
   constructor(props) {
@@ -17,7 +18,17 @@ class Header extends Component {
     };
   }
 
-  mouseLeaveHandler = () => {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.cartButtonClicked !== this.state.cartButtonClicked) {
+      if (this.state.cartButtonClicked === 1) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "unset";
+      }
+    }
+  }
+
+  closeDropdownHandler = () => {
     this.setState({ cartButtonClicked: null, currencyButtonClicked: null });
   };
 
@@ -29,7 +40,7 @@ class Header extends Component {
 
     return (
       <header>
-        <div onMouseLeave={this.mouseLeaveHandler} className={classes.navbar}>
+        <div className={classes.navbar}>
           <nav className={classes["nav-links"]}>
             <ul>
               {this.props.categories.map((category) => {
@@ -68,7 +79,11 @@ class Header extends Component {
                 <img src={downArrow} alt="down-arrow" />
               </button>
               {this.state.currencyButtonClicked && (
-                <CurrencyDropdown onMouseLeave={this.mouseLeaveHandler} />
+                <OutsideAlerter onOutsideClick={this.closeDropdownHandler}>
+                  <CurrencyDropdown
+                    onCloseDropdown={this.closeDropdownHandler}
+                  />
+                </OutsideAlerter>
               )}
             </div>
 
@@ -92,10 +107,12 @@ class Header extends Component {
               </button>
 
               {this.state.cartButtonClicked && (
-                <CartDropdown
-                  onMouseLeave={this.mouseLeaveHandler}
-                  className={classes["cart-dropdown-menu"]}
-                />
+                <OutsideAlerter onOutsideClick={this.closeDropdownHandler}>
+                  <CartDropdown
+                    onCloseDropdown={this.closeDropdownHandler}
+                    className={classes["cart-dropdown-menu"]}
+                  />
+                </OutsideAlerter>
               )}
             </div>
           </div>

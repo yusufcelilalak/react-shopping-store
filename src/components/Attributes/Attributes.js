@@ -20,6 +20,7 @@ class Attributes extends Component {
         <div className={classes.attributes}>
           {this.props["attribute-type"] !== "swatch"
             ? this.props.attributes.map((attribute) => {
+                //console.log(this.props["selected-attribute"]);
                 return (
                   <AttributeButton
                     key={attribute.value}

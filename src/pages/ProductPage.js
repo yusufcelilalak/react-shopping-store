@@ -12,7 +12,7 @@ class ProductPage extends Component {
     super();
     this.state = {
       selectedImage: undefined, // for displaying selected image in gallery
-      inputKeys: 0,
+      isAdded: 0,
       defaultProduct: {},
     };
   }
@@ -21,6 +21,7 @@ class ProductPage extends Component {
     window.scrollTo(0, 0);
 
     this.props.setDefaultProduct(this.props.params.id);
+    //this.props.setSelectedItem(product);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -49,8 +50,8 @@ class ProductPage extends Component {
 
   addToCartHandler = (product) => {
     this.props.addProductToCart();
-    this.setState({ inputKeys: this.state.inputKeys + 1 });
-    this.props.setSelectedItem(this.state.defaultProduct);
+    this.setState({ isAdded: 1 });
+    //this.props.setSelectedItem(this.state.defaultProduct);
   };
 
   render() {
@@ -96,14 +97,19 @@ class ProductPage extends Component {
           <h1>{product.brand}</h1>
           <h2>{product.name}</h2>
           {product.attributes.map((attribute) => {
-            console.log(attribute.type);
+            console.log(this.props.selectedItem);
+            let selectedAttribute = "";
+            if (this.state.isAdded === 1)
+              selectedAttribute =
+                this.props.selectedItem.selectedAttributes[attribute.id];
             return (
               <Attributes
-                key={attribute.id + this.state.inputKeys}
+                key={attribute.id}
                 type="product-page"
                 attribute-name={attribute.id}
                 attributes={attribute.items}
                 attribute-type={attribute.type}
+                selected-attribute={selectedAttribute}
               ></Attributes>
             );
           })}

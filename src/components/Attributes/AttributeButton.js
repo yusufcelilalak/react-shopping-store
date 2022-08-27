@@ -6,6 +6,7 @@ import classes from "./AttributeButton.module.css";
 class AttributeButton extends Component {
   // set selected item when attribute change
   attributeChangeHandler = (event) => {
+    console.log("changed");
     const attributeValue = event.target.id.replace(
       `-${this.props["attribute-name"]}-${this.props.id}`,
       ""
@@ -26,6 +27,7 @@ class AttributeButton extends Component {
 
   // if button is used to increase and decrease quantity, set item quantity
   attributeClickHandler = (event) => {
+    console.log("clicked");
     const operation = event.target.id[0];
     const [productOrderNumber, operationName] = event.target.id
       .slice(2)

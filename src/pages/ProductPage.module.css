@@ -14,12 +14,15 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-height: 35rem;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .product-photos img {
-  width: 5rem;
+  width: auto;
   height: 5rem;
-  object-fit: cover;
+  object-fit: contain;
   cursor: pointer;
 }
 
@@ -106,4 +109,19 @@ h2 {
   font-weight: 100;
   font-size: 1rem;
   line-height: 159.96%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

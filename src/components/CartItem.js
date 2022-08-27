@@ -38,9 +38,7 @@ class CartItem extends Component {
 
           <div className={classes.price}>
             {`${this.props.currency[0]}${
-              price !== undefined
-                ? (price.amount * product.quantity).toFixed(2)
-                : ""
+              price !== undefined ? price.amount.toFixed(2) : ""
             }`}
           </div>
 
