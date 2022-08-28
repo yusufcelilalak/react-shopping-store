@@ -20,8 +20,12 @@ class ProductPage extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    this.props.setDefaultProduct(this.props.params.id);
-    //this.props.setSelectedItem(product);
+    //this.props.setDefaultProduct(this.props.params.id);
+    const product = this.props.products.find(
+      (product) => product.id === this.props.params.id
+    );
+
+    this.props.setSelectedItem(product);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -49,8 +53,15 @@ class ProductPage extends Component {
   };
 
   addToCartHandler = (product) => {
-    this.props.addProductToCart();
-    this.setState({ isAdded: 1 });
+    const selectedAttributesNumber =
+      this.props.selectedItem.selectedAttributes === undefined
+        ? 0
+        : Object.keys(this.props.selectedItem.selectedAttributes).length;
+    console.log(selectedAttributesNumber);
+    if (product.attributes.length === selectedAttributesNumber) {
+      this.props.addProductToCart();
+      this.setState({ isAdded: 1 });
+    }
     //this.props.setSelectedItem(this.state.defaultProduct);
   };
 
@@ -97,7 +108,7 @@ class ProductPage extends Component {
           <h1>{product.brand}</h1>
           <h2>{product.name}</h2>
           {product.attributes.map((attribute) => {
-            console.log(this.props.selectedItem);
+            //console.log(this.props.selectedItem);
             let selectedAttribute = "";
             if (this.state.isAdded === 1)
               selectedAttribute =
