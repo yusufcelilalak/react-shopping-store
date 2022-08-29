@@ -4,28 +4,41 @@ import classes from "./ProductList.module.css";
 import ProductItem from "../components/ProductItem";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import { GET_PRODUCTS_BY_CATEGORY } from "../graphql/Queries";
+import { client } from "..";
+import { productsActions } from "../store/products-slice";
 
 class ProductList extends Component {
+  // function to get products by category and store in redux
+  queryProductList = () => {
+    const category = this.props.params.category;
+
+    client
+      .query({
+        query: GET_PRODUCTS_BY_CATEGORY,
+        variables: {
+          title: category,
+        },
+        fetchPolicy: "no-cache",
+      })
+      .then((response) => {
+        this.props.fillProductList(response.data.category.products);
+      });
+  };
+
+  componentDidMount() {
+    this.queryProductList();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.params.category !== this.props.params.category) {
+      this.queryProductList();
+    }
+  }
+
   render() {
-    // the first category is in the given database
-    const categoryListFirstItem =
-      this.props.categories[0] !== undefined
-        ? this.props.categories[0].name
-        : "";
-
-    // if the current link directory is empty, set category as first category, otherwise set category as link's directory
-    const category =
-      this.props.params.category === undefined
-        ? categoryListFirstItem
-        : this.props.params.category;
-
-    // in the given database first category includes all items. do filter for other categories
-    const filteredProducts =
-      category === categoryListFirstItem
-        ? this.props.products
-        : this.props.products.filter((product) => {
-            return product.category === category;
-          });
+    const category = this.props.params.category;
+    const filteredProducts = this.props.products;
 
     return (
       <div className={classes["product-list"]}>
@@ -72,4 +85,13 @@ const mapStateToProps = (state) => ({
   currency: state.currency.choosenCurrency,
 });
 
-export default withRouter(connect(mapStateToProps, null)(ProductList));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fillProductList: (products) =>
+      dispatch(productsActions.fillProductList(products)),
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ProductList)
+);

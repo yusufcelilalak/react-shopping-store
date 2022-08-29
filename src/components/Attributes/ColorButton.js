@@ -14,14 +14,10 @@ class ColorButton extends Component {
       ""
     );
 
-    console.log(attributeValue);
-
     const attributeObject = { ...product.selectedAttributes };
     attributeObject[attributeName] = attributeValue;
 
     const updatedItem = { ...product, selectedAttributes: attributeObject };
-
-    console.log(updatedItem);
 
     this.props.setSelectedItem(updatedItem);
   };

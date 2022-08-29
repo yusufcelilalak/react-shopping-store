@@ -41,8 +41,8 @@ class ProductItem extends Component {
   }
 
   addtoCartHandler = (event) => {
+    // if the attribute is not selected in main page, users are able to add product with default attributes (not works in detailed product page!)
     this.props.setSelectedItem(this.state.defaultProduct);
-
     this.props.addProductToCart();
   };
 

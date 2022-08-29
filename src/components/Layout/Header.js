@@ -8,6 +8,10 @@ import CartDropdown from "../Dropdown/CartDropdown";
 import CurrencyDropdown from "../Dropdown/CurrencyDropdown";
 import { connect } from "react-redux";
 import OutsideAlerter from "../OutsideAlerter";
+import { client } from "../..";
+import { GET_CATEGORIES, GET_CURRENCIES } from "../../graphql/Queries";
+import { productsActions } from "../../store/products-slice";
+import { currencyActions } from "../../store/currency-slice";
 
 class Header extends Component {
   constructor(props) {
@@ -18,7 +22,36 @@ class Header extends Component {
     };
   }
 
+  componentDidMount() {
+    // get categories from graphql endpoint and store them in redux
+    client
+      .query({
+        query: GET_CATEGORIES,
+      })
+      .then((response) => {
+        this.props.getCategories(response.data.categories);
+      });
+
+    //  get currencies from graphql endpoint and store them in redux
+    client
+      .query({
+        query: GET_CURRENCIES,
+      })
+      .then((response) => {
+        // check if there is currency data in redux store which comes from local storage
+        if (this.props.currency.length === 0) {
+          this.props.changeCurrency([
+            response.data.currencies[0].symbol,
+            response.data.currencies[0].label,
+          ]);
+        }
+
+        this.props.getCurrencies(response.data.currencies);
+      });
+  }
+
   componentDidUpdate(prevProps, prevState) {
+    // prevent scrolling if cart dropdown is open
     if (prevState.cartButtonClicked !== this.state.cartButtonClicked) {
       if (this.state.cartButtonClicked === 1) {
         document.body.style.overflow = "hidden";
@@ -33,11 +66,6 @@ class Header extends Component {
   };
 
   render() {
-    const firstCategory =
-      this.props.categories[0] !== undefined
-        ? this.props.categories[0].name
-        : "";
-
     return (
       <header>
         <div className={classes.navbar}>
@@ -50,9 +78,7 @@ class Header extends Component {
                       className={({ isActive }) =>
                         isActive ? classes.active : undefined
                       }
-                      to={`/${
-                        category.name === firstCategory ? "" : category.name
-                      }`}
+                      to={`/${category.name}`}
                     >
                       {category.name.toUpperCase()}
                     </NavLink>
@@ -128,4 +154,15 @@ const mapStateToProps = (state) => ({
   cart: state.cart,
 });
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCategories: (categories) =>
+      dispatch(productsActions.getCategories(categories)),
+    getCurrencies: (currencies) =>
+      dispatch(productsActions.getCurrencies(currencies)),
+    changeCurrency: (currency) =>
+      dispatch(currencyActions.changeCurreny(currency)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

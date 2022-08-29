@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import parse from "html-react-parser";
 import { cartActions } from "../store/cart-slice";
-import { productsActions } from "../store/products-slice";
+import { client } from "..";
+import { GET_PRODUCT_BY_ID } from "../graphql/Queries";
 
 class ProductPage extends Component {
   constructor() {
@@ -13,37 +14,26 @@ class ProductPage extends Component {
     this.state = {
       selectedImage: undefined, // for displaying selected image in gallery
       isAdded: 0,
-      defaultProduct: {},
+      product: {},
     };
   }
 
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    //this.props.setDefaultProduct(this.props.params.id);
-    const product = this.props.products.find(
-      (product) => product.id === this.props.params.id
-    );
-
-    this.props.setSelectedItem(product);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      JSON.stringify(prevProps.defaultSelectedProduct) !==
-      JSON.stringify(this.props.defaultSelectedProduct)
-    ) {
-      const product = this.props.defaultSelectedProduct;
-      this.props.setSelectedItem(product);
-      this.setState({ defaultProduct: product });
-    }
-
-    if (prevProps.isDataLoaded !== this.props.isDataLoaded) {
-      this.props.setDefaultProduct(this.props.params.id);
-      //const product = this.props.defaultSelectedProduct;
-      //console.log(product);
-      //this.props.setSelectedItem(product);
-    }
+    // get product by param id
+    client
+      .query({
+        query: GET_PRODUCT_BY_ID,
+        variables: {
+          id: this.props.params.id,
+        },
+        fetchPolicy: "no-cache",
+      })
+      .then((response) => {
+        this.setState({ product: response.data.product });
+        this.props.setSelectedItem(response.data.product);
+      });
   }
 
   // set selected image as main image
@@ -57,21 +47,18 @@ class ProductPage extends Component {
       this.props.selectedItem.selectedAttributes === undefined
         ? 0
         : Object.keys(this.props.selectedItem.selectedAttributes).length;
-    console.log(selectedAttributesNumber);
+
+    //if user selected all attributes, allow adding product to cart
     if (product.attributes.length === selectedAttributesNumber) {
       this.props.addProductToCart();
       this.setState({ isAdded: 1 });
     }
-    //this.props.setSelectedItem(this.state.defaultProduct);
   };
 
   render() {
-    // wait displaying page until data is loaded
-    if (this.props.isDataLoaded === false) return null;
+    if (this.state.product.prices === undefined) return null;
 
-    const product = this.props.products.find(
-      (product) => product.id === this.props.params.id
-    );
+    const product = this.state.product;
 
     const price = product.prices.find(
       (price) => price.currency.symbol === this.props.currency[0]
@@ -108,7 +95,6 @@ class ProductPage extends Component {
           <h1>{product.brand}</h1>
           <h2>{product.name}</h2>
           {product.attributes.map((attribute) => {
-            //console.log(this.props.selectedItem);
             let selectedAttribute = "";
             if (this.state.isAdded === 1)
               selectedAttribute =
@@ -162,8 +148,6 @@ const mapStateToProps = (state) => ({
   products: state.products.productList,
   currency: state.currency.choosenCurrency,
   selectedItem: state.cart.selectedItem,
-  defaultSelectedProduct: state.products.defaultSelectedProduct,
-  isDataLoaded: state.products.isDataLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -171,8 +155,6 @@ const mapDispatchToProps = (dispatch) => {
     addProductToCart: () => dispatch(cartActions.addProductToCart()),
     setSelectedItem: (product) =>
       dispatch(cartActions.setSelectedItem(product)),
-    setDefaultProduct: (productId) =>
-      dispatch(productsActions.setDefaultProduct(productId)),
   };
 };
 

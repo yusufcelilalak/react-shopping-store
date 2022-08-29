@@ -6,7 +6,6 @@ import classes from "./AttributeButton.module.css";
 class AttributeButton extends Component {
   // set selected item when attribute change
   attributeChangeHandler = (event) => {
-    console.log("changed");
     const attributeValue = event.target.id.replace(
       `-${this.props["attribute-name"]}-${this.props.id}`,
       ""
@@ -27,13 +26,10 @@ class AttributeButton extends Component {
 
   // if button is used to increase and decrease quantity, set item quantity
   attributeClickHandler = (event) => {
-    console.log("clicked");
     const operation = event.target.id[0];
     const [productOrderNumber, operationName] = event.target.id
       .slice(2)
       .split("-");
-
-    console.log(operation, productOrderNumber, operationName);
 
     if (operation === "+" && operationName === "plus") {
       this.props.increaseProductQuantity(productOrderNumber);
@@ -45,14 +41,6 @@ class AttributeButton extends Component {
   };
 
   render() {
-    const style = {
-      fontFamily: `'Raleway', sans-serif`,
-      fontWeight: 100,
-      width: "2.4rem",
-      height: "2.2rem",
-      fontSize: "2rem",
-    };
-
     // if the attribute is selected, make radio button checked
     const isSelected =
       this.props.selected !== false
@@ -67,19 +55,13 @@ class AttributeButton extends Component {
         ? {}
         : { disabled: 1 };
 
-    const inputLabel = (_style) => {
-      return (
-        <label
-          style={_style}
-          className={`${classes["attribute-label"]} ${
-            classes[this.props.type]
-          } ${this.props.selected === true && classes["checked-label"]}`}
-          htmlFor={`${this.props.attribute}-${this.props["attribute-name"]}-${this.props.id}`}
-        >
-          {this.props.attribute}
-        </label>
-      );
-    };
+    // different class for increase button
+    const increaseOperationButton =
+      this.props.attribute === "+" ? "increase-button" : "";
+
+    // different class for decrease button
+    const decreaseOperationButton =
+      this.props.attribute === "-" ? "decrease-button" : "";
 
     return (
       <Fragment>
@@ -93,11 +75,16 @@ class AttributeButton extends Component {
           {...isSelected}
           {...isProductPage}
         />
-        {this.props.attribute === "+"
-          ? inputLabel(style)
-          : this.props.attribute === "-"
-          ? inputLabel({ ...style, paddingBottom: "4px" })
-          : inputLabel({})}
+        <label
+          className={`${classes["attribute-label"]} ${
+            classes[this.props.type]
+          } ${this.props.selected === true && classes["checked-label"]} ${
+            classes[increaseOperationButton]
+          } ${classes[decreaseOperationButton]}`}
+          htmlFor={`${this.props.attribute}-${this.props["attribute-name"]}-${this.props.id}`}
+        >
+          {this.props.attribute}
+        </label>
       </Fragment>
     );
   }
