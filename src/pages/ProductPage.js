@@ -56,7 +56,8 @@ class ProductPage extends Component {
   };
 
   render() {
-    if (this.state.product.prices === undefined) return null;
+    if (this.state.product === null || this.state.product.prices === undefined)
+      return null;
 
     const product = this.state.product;
 
