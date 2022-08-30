@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import classes from "./Header.module.css";
 import logoURL from "../../assets/a-logo.svg";
 import downArrow from "../../assets/down-arrow.svg";
@@ -88,7 +88,9 @@ class Header extends Component {
             </ul>
           </nav>
           <div className={classes.logo}>
-            <img src={logoURL} alt="brand-logo" />
+            <Link to="/">
+              <img src={logoURL} alt="brand-logo" />
+            </Link>
           </div>
           <div className={classes.actions}>
             <div className={classes["currency-dropdown"]}>

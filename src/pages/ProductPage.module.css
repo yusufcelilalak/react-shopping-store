@@ -112,16 +112,16 @@ h2 {
 }
 
 /* width */
-::-webkit-scrollbar {
+.product-photos::-webkit-scrollbar {
   width: 5px;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+.product-photos::-webkit-scrollbar-thumb {
   background: #888;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+.product-photos::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

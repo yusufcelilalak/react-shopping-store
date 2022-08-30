@@ -13,6 +13,7 @@ class ProductItem extends Component {
     this.state = {
       isOver: false, // if mouse over on product display button for buying
       defaultProduct: {},
+      attributeSize: 0,
     };
   }
 
@@ -29,6 +30,8 @@ class ProductItem extends Component {
       (product) => product.id === this.props.id
     );
 
+    this.setState({ attributeSize: product.attributes.length });
+
     const attributes = {};
 
     product.attributes.forEach((attribute) => {
@@ -41,13 +44,27 @@ class ProductItem extends Component {
   }
 
   addtoCartHandler = (event) => {
-    // if the attribute is not selected in main page, users are able to add product with default attributes (not works in detailed product page!)
-    this.props.setSelectedItem(this.state.defaultProduct);
-    this.props.addProductToCart();
+    if (this.state.attributeSize <= 0) {
+      // if the attribute is not selected in main page, users are able to add product with default attributes (not works in detailed product page!)
+      this.props.setSelectedItem(this.state.defaultProduct);
+      this.props.addProductToCart();
+    }
   };
 
   render() {
     const notInStock = this.props.inStock === false ? "not-in-stock" : "";
+
+    const addButton = (
+      <button
+        id={this.props.id}
+        onClick={this.props.inStock === true ? this.addtoCartHandler : null}
+        className={`${classes["add-cart-btn"]} ${
+          notInStock !== "" ? classes["not-in-stock-button"] : ""
+        }`}
+      >
+        <img src={addCart} alt="empty-cart" />
+      </button>
+    );
 
     return (
       <li className={classes["list-item"]}>
@@ -71,19 +88,12 @@ class ProductItem extends Component {
               </div>
             </Link>
 
-            {this.state.isOver && (
-              <button
-                id={this.props.id}
-                onClick={
-                  this.props.inStock === true ? this.addtoCartHandler : null
-                }
-                className={`${classes["add-cart-btn"]} ${
-                  notInStock !== "" ? classes["not-in-stock-button"] : ""
-                }`}
-              >
-                <img src={addCart} alt="empty-cart" />
-              </button>
-            )}
+            {this.state.isOver &&
+              (this.state.attributeSize > 0 ? (
+                <Link to={`../products/${this.props.id}`}>{addButton}</Link>
+              ) : (
+                addButton
+              ))}
           </div>
           <h3>{this.props.title}</h3>
           <h4>{this.props.price}</h4>

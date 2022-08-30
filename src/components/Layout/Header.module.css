@@ -107,6 +107,7 @@ header {
   background-color: #ffffff;
   z-index: 1;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 button {
@@ -116,4 +117,19 @@ button {
   font-family: inherit;
   font-weight: bold;
   cursor: pointer;
+}
+
+/* width */
+.cart-dropdown-menu::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+.cart-dropdown-menu::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.cart-dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
